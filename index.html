@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f5ff">
+
+    <meta name="description" content="NoteNest — a beautiful, simple space to organize your thoughts and ideas.">
+
+    <title>NoteNest — Your Thoughts, Organized</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <a href="#" class="brand" aria-label="NoteNest home">
+                <span class="brand-icon">n.</span>
+                <span class="brand-name">NoteNest</span>
+            </a>
+
+            <button class="create-btn" id="createNoteBtn">
+                <span>＋</span>
+                <span>New note</span>
+                <kbd>N</kbd>
+            </button>
+
+            <nav class="sidebar-nav" aria-label="Main navigation">
+
+                <p class="nav-heading">WORKSPACE</p>
+
+                <button class="nav-item active" data-view="all">
+                    <span class="nav-icon">▤</span>
+                    <span>All Notes</span>
+                    <span class="nav-count" id="allCount">0</span>
+                </button>
+
+                <button class="nav-item" data-view="favorites">
+                    <span class="nav-icon">♡</span>
+                    <span>Favorites</span>
+                </button>
+
+                <button class="nav-item" data-view="pinned">
+                    <span class="nav-icon">⌖</span>
+                    <span>Pinned</span>
+                </button>
+
+                <button class="nav-item" data-view="checklists">
+                    <span class="nav-icon">☑</span>
+                    <span>Checklists</span>
+                </button>
+
+                <button class="nav-item" data-view="archive">
+                    <span class="nav-icon">▣</span>
+                    <span>Archive</span>
+                </button>
+
+                <p class="nav-heading categories-heading">CATEGORIES</p>
+
+                <button class="nav-item" data-category="Personal">
+                    <span class="category-dot personal-dot"></span>
+                    <span>Personal</span>
+                </button>
+
+                <button class="nav-item" data-category="Study">
+                    <span class="category-dot study-dot"></span>
+                    <span>Study</span>
+                </button>
+
+                <button class="nav-item" data-category="Work">
+                    <span class="category-dot work-dot"></span>
+                    <span>Work</span>
+                </button>
+
+                <button class="nav-item" data-category="Ideas">
+                    <span class="category-dot ideas-dot"></span>
+                    <span>Ideas</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="storage-card">
+                    <span class="storage-icon">✦</span>
+                    <div>
+                        <strong>Your little space</strong>
+                        <p>Every thought matters.</p>
+                    </div>
+                </div>
+
+                <button class="nav-item" data-view="trash">
+                    <span class="nav-icon">▱</span>
+                    <span>Trash</span>
+                </button>
+
+                <button class="nav-item" id="settingsBtn">
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </button>
+
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    ☰
+                </button>
+
+                <div class="breadcrumb">
+                    <span>Workspace</span>
+                    <span class="breadcrumb-divider">/</span>
+                    <strong id="currentPage">All Notes</strong>
+                </div>
+
+                <div class="topbar-actions">
+                    <label class="search-box">
+                        <span>⌕</span>
+                        <input type="search" id="searchInput" placeholder="Search your thoughts..."
+                            aria-label="Search notes">
+                        <kbd> / </kbd>
+                    </label>
+
+                    <button class="icon-btn theme-btn" id="themeToggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        ☾
+                    </button>
+
+                    <button class="avatar" id="profileBtn" aria-label="Profile settings">
+                        N
+                    </button>
+                </div>
+            </header>
+
+            <section class="content-area">
+
+                <div class="welcome-row">
+                    <div>
+                        <p class="eyebrow" id="todayLabel">YOUR PERSONAL SPACE</p>
+                        <h1 id="pageTitle">Your thoughts,<br>
+                            <span>beautifully organized.</span>
+                        </h1>
+                        <p class="welcome-subtitle">
+                            A little space for everything on your mind.
+                        </p>
+                    </div>
+
+                    <div class="welcome-decoration" aria-hidden="true">
+                        <span class="deco-star star-one">✳</span>
+                        <span class="deco-circle"></span>
+                        <span class="deco-star star-two">✦</span>
+                        <span class="deco-dot"></span>
+                    </div>
+                </div>
+
+                <!-- Quick stats -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <span class="stat-icon lavender-icon">▤</span>
+                        <div>
+                            <p>Total notes</p>
+                            <strong id="statTotal">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-icon coral-icon">♡</span>
+                        <div>
+                            <p>Favorites</p>
+                            <strong id="statFavorites">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-icon mint-icon">☑</span>
+                        <div>
+                            <p>Checklists</p>
+                            <strong id="statChecklists">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes toolbar -->
+                <div class="notes-toolbar">
+                    <div>
+                        <h2 id="sectionTitle">All your notes</h2>
+                        <p id="notesSubtitle">Your ideas live here.</p>
+                    </div>
+
+                    <div class="toolbar-actions">
+                        <select id="sortSelect" aria-label="Sort notes">
+                            <option value="updated">Recently updated</option>
+                            <option value="created">Recently created</option>
+                            <option value="title">Title A–Z</option>
+                        </select>
+
+                        <button class="view-toggle" id="viewToggle" title="Toggle notes layout"
+                            aria-label="Toggle notes layout">
+                            ▦
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Category filters -->
+                <div class="filter-row" id="filterRow">
+                    <button class="filter-chip active" data-filter="All">
+                        All notes
+                    </button>
+                    <button class="filter-chip" data-filter="Personal">
+                        Personal
+                    </button>
+                    <button class="filter-chip" data-filter="Study">
+                        Study
+                    </button>
+                    <button class="filter-chip" data-filter="Work">
+                        Work
+                    </button>
+                    <button class="filter-chip" data-filter="Ideas">
+                        Ideas
+                    </button>
+                </div>
+
+                <!-- Notes grid: JavaScript will render notes here -->
+                <div class="notes-grid" id="notesGrid"></div>
+
+                <!-- Empty state -->
+                <div class="empty-state" id="emptyState" hidden>
+                    <div class="empty-illustration">✎</div>
+                    <h3 id="emptyTitle">A fresh page awaits.</h3>
+                    <p id="emptyDescription">
+                        Your next great idea could start right here.
+                    </p>
+                    <button class="create-btn empty-create-btn" id="emptyCreateBtn">
+                        ＋ Create your first note
+                    </button>
+                </div>
+
+                <!-- Footer -->
+                <footer class="app-footer">
+                    <span>Made with care, for your thoughts. ✦</span>
+                    <span id="notesFooterCount">0 notes</span>
+                </footer>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Note editor modal -->
+    <div class="modal-backdrop" id="noteModal" hidden>
+        <section class="note-editor" role="dialog" aria-modal="true" aria-labelledby="editorHeading">
+
+            <header class="editor-header">
+                <span class="editor-label" id="editorHeading">
+                    ✦ YOUR NEW THOUGHT
+                </span>
+
+                <button class="icon-btn" id="closeEditorBtn" aria-label="Close editor">×</button>
+            </header>
+
+            <form id="noteForm">
+                <input type="hidden" id="noteId">
+
+                <input type="text" id="noteTitle" class="editor-title" placeholder="Give your note a title..."
+                    maxlength="120" required>
+
+                <textarea id="noteContent" class="editor-content" placeholder="Start writing your thoughts here..."
+                    rows="8"></textarea>
+
+                <div class="editor-options">
+                    <label>
+                        <span>Category</span>
+                        <select id="noteCategory">
+                            <option value="Personal">Personal</option>
+                            <option value="Study">Study</option>
+                            <option value="Work">Work</option>
+                            <option value="Ideas">Ideas</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Note color</span>
+                        <select id="noteColor">
+                            <option value="lavender">Lavender</option>
+                            <option value="coral">Coral</option>
+                            <option value="mint">Mint</option>
+                            <option value="butter">Butter Yellow</option>
+                            <option value="blue">Sky Blue</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label class="tags-label" for="noteTags">
+                    Tags <span>(optional, comma separated)</span>
+                </label>
+                <input type="text" id="noteTags" class="tags-input" placeholder="e.g. university, ideas, important">
+
+                <div class="editor-checklist">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="noteIsChecklist">
+                        <span>Make this a checklist</span>
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="noteIsPinned">
+                        <span>Pin this note</span>
+                    </label>
+                </div>
+
+                <div id="checklistEditor" hidden>
+                    <label for="checklistItems">Checklist items</label>
+                    <textarea id="checklistItems" placeholder="One task per line..." rows="4"></textarea>
+                </div>
+
+                <div class="editor-footer">
+                    <span id="editorStatus">Your changes will be saved locally.</span>
+                    <button type="submit" class="save-btn">
+                        Save note <span>↗</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <!-- Settings modal -->
+    <div class="modal-backdrop" id="settingsModal" hidden>
+        <section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsHeading">
+
+            <header class="editor-header">
+                <span class="editor-label" id="settingsHeading">
+                    ⚙ SETTINGS
+                </span>
+                <button class="icon-btn" id="closeSettingsBtn" aria-label="Close settings">×</button>
+            </header>
+
+            <h2>Make it yours.</h2>
+            <p>Choose how NoteNest feels and works for you.</p>
+
+            <label class="settings-field">
+                <span>Display language</span>
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="bn">বাংলা</option>
+                    <option value="bn-en">Banglish-friendly</option>
+                </select>
+            </label>
+
+            <label class="settings-field">
+                <span>Your display name</span>
+                <input type="text" id="displayName" placeholder="Enter your name">
+            </label>
+
+            <div class="settings-actions">
+                <button class="secondary-btn" id="exportNotesBtn">
+                    Export backup
+                </button>
+
+                <button class="secondary-btn" id="importNotesBtn">
+                    Import backup
+                </button>
+
+                <input type="file" id="importFileInput" accept=".json,application/json" hidden>
+            </div>
+
+            <button class="secondary-btn full-width" id="clearTrashBtn">
+                Empty trash
+            </button>
+        </section>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>
